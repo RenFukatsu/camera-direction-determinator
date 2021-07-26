@@ -90,3 +90,10 @@ void CameraDirectionDeterminator::position_callback(const color_detector_msgs::T
 }
 
 void CameraDirectionDeterminator::process() { ros::spin(); }
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "camera_direction_deteminator");
+    CameraDirectionDeterminator cdd;
+    cdd.process();
+    return 0;
+}
