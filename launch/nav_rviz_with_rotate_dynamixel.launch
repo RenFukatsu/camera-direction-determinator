@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="roomba" />
+    <include file="$(find navigator)/launch/rviz_navigator.launch" >
+        <arg name="roomba" default="$(arg roomba)" />
+    </include>
+    <node pkg="camera-direction-determinator" type="camera-direction-determinator" name="dynamixel_ctrl" output="screen" />
+</launch>
