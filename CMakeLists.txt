@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(camera-direction-deteminator)
+project(camera-direction-determinator)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   dynamixel_angle_msgs
   kalman-filter
   roscpp
+  message_filters
 )
 
 ## System dependencies are found with CMake's conventions

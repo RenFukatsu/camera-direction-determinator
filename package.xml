@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>camera-direction-deteminator</name>
+  <name>camera-direction-determinator</name>
   <version>0.0.0</version>
-  <description>The camera-direction-deteminator package</description>
+  <description>The camera-direction-determinator package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
