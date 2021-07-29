@@ -67,7 +67,7 @@ void CameraDirectionDeterminator::angle_callback(const color_detector_msgs::Targ
         return;
     }
     color_detector_msgs::TargetAngle angle;
-    double min_likelihood = 1e6;
+    double min_likelihood = 1e3;
     for (const auto &agl : angles->data) {
         kalman_filters_[agl.color].estimate_update((ros::Time::now() - start_time_).toSec());
         double likelihood = kalman_filters_[agl.color].get_likelihood();
@@ -76,9 +76,18 @@ void CameraDirectionDeterminator::angle_callback(const color_detector_msgs::Targ
             min_likelihood = likelihood;
         }
     }
+    if (min_likelihood == 1e3) {
+        ROS_WARN_STREAM("do not update likelihood");
+        return;
+    }
+    if (!isfinite(angle.radian)) {
+        ROS_WARN_STREAM(angle.color << "'s radian is " << angle.radian);
+        return;
+    }
     dynamixel_angle_msgs::DynamixelAngle msg;
     msg.theta = angle.radian;
     dynamixel_pubs_[angles->my_number - 1].publish(msg);
+    ROS_INFO_STREAM("camera direction to " << angle.color);
 }
 
 void CameraDirectionDeterminator::position_callback(const color_detector_msgs::TargetPositionConstPtr &position) {
