@@ -4,5 +4,10 @@
     <include file="$(find navigator)/launch/rviz_navigator.launch" >
         <arg name="roomba" default="$(arg roomba)" />
     </include>
+    <group ns="roomba" >
+        <include file="$(find multi_robots)/launch/launch_softwares.launch" >
+            <arg name="roomba" defalut="$(arg roomba)" />
+        </include>
+    </group>
     <node pkg="camera-direction-determinator" type="camera-direction-determinator" name="dynamixel_ctrl" output="screen" />
 </launch>
