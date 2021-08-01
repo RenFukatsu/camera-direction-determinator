@@ -4,10 +4,12 @@
 #include <ros/ros.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/transform_listener.h>
+#include <visualization_msgs/MarkerArray.h>
 
 #include "color_detector_msgs/TargetAngleList.h"
 #include "color_detector_msgs/TargetPosition.h"
 #include "color_detector_params/hsv.h"
+#include "color_detector_srvs/ColorEnable.h"
 #include "dynamixel_angle_msgs/DynamixelAngle.h"
 #include "kalman-filter/kalman_filter.h"
 
@@ -19,6 +21,9 @@ class CameraDirectionDeterminator {
     void update_kalman_filter(size_t, const color_detector_msgs::TargetPositionConstPtr&);
     void calc_target_pose_on_world(std::string, const color_detector_msgs::TargetPositionConstPtr&,
                                    const geometry_msgs::TransformStamped&, geometry_msgs::PoseStamped*);
+    void call_color_enable_service(ros::ServiceClient*, std::map<std::string, bool>*, std::string);
+    void set_color_map();
+    void timer_callback(const ros::TimerEvent&);
     void process();
 
  private:
@@ -30,11 +35,18 @@ class CameraDirectionDeterminator {
     std::vector<ros::Subscriber> position_subs_;
     std::vector<ros::Subscriber> angle_subs_;
     std::vector<ros::Publisher> dynamixel_pubs_;
+    std::vector<ros::ServiceClient> color_enable_clients_;
     std::map<std::string, KalmanFilter> kalman_filters_;
     std::vector<std::string> colors_;
+    std::vector<std::map<std::string, bool>> color_enables_;
     int HZ;
+    int MIN_CLUSTER;
     double MOTION_NOISE;
     double MEASUREMENT_NOISE;
+    double LIFETIME_THRESHOLD;
+    ros::Timer timer_;
+    ros::Publisher ellipse_pub_;
+    std::map<std::string, std_msgs::ColorRGBA> color_map_;
 };
 
 #endif  // MULTI_ROBOTS_CAMERA_DIRECTION_DETERMINATOR_H_

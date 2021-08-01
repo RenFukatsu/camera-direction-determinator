@@ -4,11 +4,13 @@ project(camera-direction-determinator)
 find_package(catkin REQUIRED COMPONENTS
   color_detector_msgs
   color_detector_params
+  color_detector_srvs
   dynamixel_angle_msgs
   kalman-filter
   roscpp
   tf2_ros
   tf2_geometry_msgs
+  visualization_msgs
 )
 
 catkin_package(
