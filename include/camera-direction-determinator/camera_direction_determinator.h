@@ -22,6 +22,7 @@ class CameraDirectionDeterminator {
     void calc_target_pose_on_world(std::string, const color_detector_msgs::TargetPositionConstPtr&,
                                    const geometry_msgs::TransformStamped&, geometry_msgs::PoseStamped*);
     void call_color_enable_service(ros::ServiceClient*, std::map<std::string, bool>*, std::string);
+    void publish_angle(double radian, int roomba_number);
     void set_color_map();
     void timer_callback(const ros::TimerEvent&);
     void process();
