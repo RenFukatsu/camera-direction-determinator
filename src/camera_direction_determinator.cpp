@@ -3,7 +3,7 @@
 CameraDirectionDeterminator::CameraDirectionDeterminator()
     : private_nh_("~"), tf_listener_(tf_buffer_), start_time_(ros::Time::now()) {
     private_nh_.param("HZ", HZ, 10);
-    private_nh_.param("MIN_CLUSTER", MIN_CLUSTER, 100);
+    private_nh_.param("MIN_CLUSTER", MIN_CLUSTER, 300);
     private_nh_.param("MOTION_NOISE", MOTION_NOISE, 0.03);
     private_nh_.param("MEASUREMENT_NOISE", MEASUREMENT_NOISE, 0.1);
     private_nh_.param("LIFETIME_THRESHOLD", LIFETIME_THRESHOLD, 0.1);
@@ -75,6 +75,7 @@ void CameraDirectionDeterminator::calc_target_pose_on_world(std::string roomba,
 void CameraDirectionDeterminator::angle_callback(const color_detector_msgs::TargetAngleListConstPtr &angles) {
     if (angles->data.empty()) {
         ROS_WARN("angle list is empty.");
+        publish_angle(0, angles->my_number);
         return;
     }
     color_detector_msgs::TargetAngle angle;
@@ -90,18 +91,24 @@ void CameraDirectionDeterminator::angle_callback(const color_detector_msgs::Targ
     }
     if (min_likelihood == 1e5) {
         ROS_WARN_STREAM("cannnot find roomba");
+        publish_angle(0, angles->my_number);
         return;
     }
     if (!isfinite(angle.radian)) {
         ROS_WARN_STREAM(angle.color << "'s radian is " << angle.radian);
+        publish_angle(0, angles->my_number);
         return;
     }
-    dynamixel_angle_msgs::DynamixelAngle msg;
-    msg.theta = angle.radian;
-    int roomba_idx = angles->my_number;
-    dynamixel_pubs_[roomba_idx - 1].publish(msg);
+    publish_angle(angle.radian, angles->my_number);
     ROS_INFO_STREAM("camera direction to " << angle.color);
+    int roomba_idx = angles->my_number;
     call_color_enable_service(&color_enable_clients_[roomba_idx - 1], &color_enables_[roomba_idx - 1], angle.color);
+}
+
+void CameraDirectionDeterminator::publish_angle(double radian, int roomba_number) {
+    dynamixel_angle_msgs::DynamixelAngle msg;
+    msg.theta = radian;
+    dynamixel_pubs_[roomba_number - 1].publish(msg);
 }
 
 void CameraDirectionDeterminator::call_color_enable_service(ros::ServiceClient *client,
