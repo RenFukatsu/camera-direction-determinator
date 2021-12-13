@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(camera-direction-determinator)
+project(camera_direction_determinator)
 
 find_package(catkin REQUIRED COMPONENTS
   color_detector_msgs
   color_detector_params
   color_detector_srvs
   dynamixel_angle_msgs
-  kalman-filter
+  kalman_filter
   roscpp
   tf2_ros
   tf2_geometry_msgs

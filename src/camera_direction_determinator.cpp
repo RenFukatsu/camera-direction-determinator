@@ -1,4 +1,4 @@
-#include "camera-direction-determinator/camera_direction_determinator.h"
+#include "camera_direction_determinator/camera_direction_determinator.h"
 
 CameraDirectionDeterminator::CameraDirectionDeterminator()
     : private_nh_("~"), tf_listener_(tf_buffer_), start_time_(ros::Time::now()) {

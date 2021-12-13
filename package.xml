@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>camera-direction-determinator</name>
+  <name>camera_direction_determinator</name>
   <version>0.0.0</version>
-  <description>The camera-direction-determinator package</description>
+  <description>The camera_direction_determinator package</description>
 
   <maintainer email="fukatsuren88@gmail.com">RenFukatsu</maintainer>
   <license>MIT</license>
@@ -12,7 +12,7 @@
   <depend>color_detector_params</depend>
   <depend>color_detector_srvs</depend>
   <depend>dynamixel_angle_msgs</depend>
-  <depend>kalman-filter</depend>
+  <depend>kalman_filter</depend>
   <depend>tf2_ros</depend>
   <depend>tf2_geometry_msgs</depend>
   <depend>visualization_msgs</depend>

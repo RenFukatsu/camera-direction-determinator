@@ -11,7 +11,7 @@
 #include "color_detector_params/hsv.h"
 #include "color_detector_srvs/ColorEnable.h"
 #include "dynamixel_angle_msgs/DynamixelAngle.h"
-#include "kalman-filter/kalman_filter.h"
+#include "kalman_filter/kalman_filter.h"
 
 class CameraDirectionDeterminator {
  public:
