@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="camera_direction_determinator" type="camera_direction_determinator_by_subscribe_pose" name="dynamixel_ctrl" output="screen" >
+        <param name="HZ" value="10" />
+        <param name="OBSERVABLE_DISTANCE" value="8.0" />
+        <param name="TOLERANCE_TIME_DIFF" value="1.5" />
+    </node>
+    <node pkg="rosbag" type="record" name="rosbag_record" args="-o $(env HOME)/camera_direction.bag  /tf /tf_static" />
+</launch>

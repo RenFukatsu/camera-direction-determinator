@@ -27,3 +27,6 @@ include_directories(
 
 add_executable(${PROJECT_NAME} src/camera_direction_determinator.cpp)
 target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+
+add_executable(${PROJECT_NAME}_by_subscribe_pose src/camera_direction_determinator_by_subscribe_pose.cpp)
+target_link_libraries(${PROJECT_NAME}_by_subscribe_pose ${catkin_LIBRARIES})
