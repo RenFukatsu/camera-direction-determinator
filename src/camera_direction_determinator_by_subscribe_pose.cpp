@@ -156,6 +156,8 @@ void CameraDirectionDeteminatorBySubscribePose::process() {
         determine_direction();
         ROS_INFO_STREAM("[camera_direction_determinator_by_subscribe_pose] elapsed time : "
                         << (ros::Time::now() - start_time).toSec() << "[s]");
+        ros::spinOnce();
+        loop_rate.sleep();
     }
 }
 
